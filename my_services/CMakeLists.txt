@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(my_topics)
+project(my_services)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -10,8 +10,8 @@ project(my_topics)
 find_package(catkin REQUIRED COMPONENTS
   message_generation
   message_runtime
+  roscpp
   rospy
-  std_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -48,17 +48,17 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-add_message_files(
-FILES
-Complex.msg
-)
+# add_message_files(
+#   FILES
+#   Complex.msg
+#   Message2.msg
+# )
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
+add_service_files(
+  FILES
+  WordCount.srv
+)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -67,15 +67,16 @@ Complex.msg
 #   Action2.action
 # )
 
-## Generate added messages and services with any dependencies listed here
- generate_messages(
- DEPENDENCIES
- std_msgs
- )
+## Generate added messages and services with any dependencies
+##listed here
+  generate_messages (
+  DEPENDENCIES
+  std_msgs  # Or other packages containing msgs
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
-################## ##############################
+################################################
 
 ## To declare and build dynamic reconfigure parameters within this
 ## package, follow these steps:
@@ -83,7 +84,11 @@ Complex.msg
 ##   * add a build_depend and a exec_depend tag for "dynamic_reconfigure"
 ## * In this file (CMakeLists.txt):
 ##   * add "dynamic_reconfigure" to
-##     find_package(catkin REQUIRED COMPONENTS ...)
+  find_package(catkin REQUIRED 
+                    COMPONENTS
+                    actionlib_msgs
+                    message_generation
+                    std_msgs)
 ##   * uncomment the "generate_dynamic_reconfigure_options" section below
 ##     and list every .cfg file to be processed
 
@@ -103,10 +108,9 @@ Complex.msg
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-CATKIN_DEPENDS message_runtime
 #  INCLUDE_DIRS include
-#  LIBRARIES my_topics
-#  CATKIN_DEPENDS message_generation message_runtime rospy std_msgs
+#  LIBRARIES my_services
+#  CATKIN_DEPENDS message_generation message_runtime roscpp rospy
 #  DEPENDS system_lib
 )
 
@@ -123,7 +127,7 @@ include_directories(
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/my_topics.cpp
+#   src/${PROJECT_NAME}/my_services.cpp
 # )
 
 ## Add cmake target dependencies of the library
@@ -134,7 +138,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/my_topics_node.cpp)
+# add_executable(${PROJECT_NAME}_node src/my_services_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -198,7 +202,7 @@ include_directories(
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_my_topics.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_my_services.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
