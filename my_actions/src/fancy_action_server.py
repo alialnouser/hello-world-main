@@ -4,7 +4,7 @@ import rospy
 
 import time
 import actionlib
-from rico_actions.msg import TimerAction, TimerResult, TimerFeedback
+from TimerAction.msg import TimerAction, TimerResult, TimerFeedback
 
 
 def do_timer(goal):

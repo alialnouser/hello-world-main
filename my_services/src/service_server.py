@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import rospy
-from rico_services.srv import WordCount, WordCountResponse
+from WordCount.srv import WordCount, WordCountResponse
 
 def count_words(request):
   return len(request.words.split()) # num of words

@@ -4,7 +4,7 @@ import rospy
 
 import time
 import actionlib
-from rico_actions.msg import TimerAction, TimerGoal
+from TimerAction.msg import TimerAction, TimerGoal
 
 
 def feedback_cb(feedback):
@@ -17,13 +17,9 @@ client = actionlib.SimpleActionClient('timer', TimerAction)
 client.wait_for_server()
 goal = TimerGoal()
 goal.time_to_wait = rospy.Duration.from_sec(5.0)
-# Uncomment this line to test server-side abort:
-#goal.time_to_wait = rospy.Duration.from_sec(500.0)
 
 client.send_goal(goal, feedback_cb=feedback_cb)
-# Uncomment these lines to test goal preemption:
-#time.sleep(3.0)
-#client.cancel_goal()
+
 
 client.wait_for_result()
 print('[Result] State: %d' % (client.get_state()))

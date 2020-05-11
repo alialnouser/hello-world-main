@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import rospy
-from rico_topics.msg import Complex # custom message type
+from Complex.msg import Complex # custom message type
 from random import random # for random numbers!
 
 rospy.init_node('message_publisher') # initialize node

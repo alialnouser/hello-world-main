@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import rospy
-from rico_topics.msg import Complex
+from Complex.msg import Complex
 
 def callback(msg):
 	print 'Real:', msg.real           # print real part
